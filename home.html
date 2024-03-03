@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note Taking Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #5de19d;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #0b0505;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(72, 59, 59, 0.1);
+        }
+        form {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button[type="submit"], button[type="button"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .note {
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-left: 20px; 
+        }
+        .note::before {
+            content: "\2022"; /* Unicode character for bullet point */
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #007bff; 
+        }
+        h1 {
+            color: white; 
+            text-align: center;
+        }
+        .action-buttons {
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .action-buttons form {
+            display: inline; /* Display forms inline */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Note Taking Application</h1>
+        <form action="/" method="POST">
+            <input type="text" name="note" placeholder="Enter a note">
+            <button type="submit">Add Note</button>
+        </form>
+
+        <ul>
+            {% for index in range(notes|length) %}
+                <li class="note">
+                    {{ notes[index] }}
+                    <div class="action-buttons">
+                        <form action="/update/{{ index }}" method="POST">
+                            <input type="text" name="new_note" placeholder="Update note">
+                            <button type="submit">Update</button>
+                        </form>
+                        <form action="/delete/{{ index }}" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
